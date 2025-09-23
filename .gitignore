@@ -1,0 +1,25 @@
+# Local OpenTofu/Terraform directories
+.terraform/
+
+# Local OpenTofu/Terraform state files
+# These files often contain sensitive information and should never be versioned.
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data, such as
+# passwords, private keys, and other secrets. These should not be part of version
+# control as they are data points which are potentially sensitive and subject
+# to change depending on the environment.
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are usually used for local testing and overriding
+# values and should not be committed to version control.
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
