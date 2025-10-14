@@ -9,7 +9,7 @@ resource "helm_release" "argo-cd" {
   chart = "argo-cd"
   version = "8.5.6"
   values = [
-    file("argo-cd-values/values.yaml")
+    file("argo-cd-config/values.yaml")
   ]
 
   atomic = true
@@ -29,5 +29,36 @@ resource "helm_release" "kube-prometheus-stack" {
   ]
 
   atomic = true
-
 }
+
+resource "helm_release" "cert-manager" {
+  name = "cert-manager-release"
+  namespace = "cert-manager"
+  create_namespace = true
+
+  repository = "https://charts.jetstack.io"
+  chart = "cert-manager"
+  version = "1.18.2"
+
+  set = [{
+    name = "crds.enabled"
+    value = "true"
+  }]
+}
+
+# resource "helm_release" "cert-manager-addons" {
+#   name = "cert-manager-addons-release"
+#   namespace = "cert-manager"
+#   chart = "./charts/cert-manager-addons"
+
+# #   values = [
+# #     templatefile("./charts/cert-manager-addons/values.yaml", {
+# #         cert-manager-acme-email = var.cert-manager-acme-email
+# #     })
+# #   ]
+
+# set = [{
+#     name = "spec.acme.email"
+#     value = var.cert-manager-acme-email
+# }]
+# }

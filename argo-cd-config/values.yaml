@@ -1,5 +1,5 @@
 global:
-  domain: argocd.demolab.com
+  domain: argocd.vamseekonda.com
 
 configs:
   params:
