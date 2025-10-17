@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 
 # will create kubernees ingress
 ingress:
