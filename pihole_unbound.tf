@@ -50,10 +50,19 @@ resource "kubernetes_persistent_volume_claim" "persistent_volume_claim_pihole"{
     }
 }
 
-resource "helm_release" "pihole" {
-  name = "pihole"
+resource "helm_release" "unbound" {
+  name = "unbound"
   namespace = "pihole"
   create_namespace = true
+
+  repository = "https://charts.pascaliske.dev"
+  chart = "unbound"
+  version = "1.0.3"
+}
+
+resource "helm_release" "pihole" {
+  name = "pihole"
+  namespace = helm_release.unbound.namespace
 
   repository = "https://mojo2600.github.io/pihole-kubernetes/"
   chart = "pihole"
@@ -65,4 +74,7 @@ resource "helm_release" "pihole" {
     })
   ]
   atomic = true
+
+  timeout = 300
 }
+
