@@ -3,6 +3,7 @@
 
 # Local OpenTofu/Terraform state files
 # These files often contain sensitive information and should never be versioned.
+tfstate
 *.tfstate
 *.tfstate.*
 

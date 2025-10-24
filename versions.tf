@@ -13,6 +13,6 @@ terraform {
   }
 
   backend "local" {
-    path = "../../tfstate/homelab.tfstate"
+    path = "./tfstate/homelab.tfstate"
   }
 }
