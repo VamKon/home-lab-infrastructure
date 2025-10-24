@@ -1,49 +1,13 @@
-# namespace
-
-resource "helm_release" "argo-cd" {
-  name      = "argo-cd-release"
-  namespace = "argo-cd"
-  create_namespace = true
-
-  repository = "https://argoproj.github.io/argo-helm"
-  chart = "argo-cd"
-  version = "8.5.6"
-  values = [
-    file("argo-cd-config/values.yaml")
-  ]
-
-  atomic = true
+module "argo-cd" {
+  source = "./modules/argo-cd"
 }
 
-resource "helm_release" "kube-prometheus-stack" {
-  name      = "kube-prometheus-stack-release"
-  namespace = "prometheus"
-  create_namespace = true
-
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart = "kube-prometheus-stack"
-  version = "77.11.0"
-
-  values = [
-    file("kube-prometheus-stack-config/values.yaml")
-  ]
-
-  atomic = true
+module "kube-prometheus-stack" {
+  source = "./modules/kube-prometheus-stack"
 }
 
-resource "helm_release" "cert-manager" {
-  name = "cert-manager-release"
-  namespace = "cert-manager"
-  create_namespace = true
-
-  repository = "https://charts.jetstack.io"
-  chart = "cert-manager"
-  version = "1.18.2"
-
-  set = [{
-    name = "crds.enabled"
-    value = "true"
-  }]
+module "cert-manager" {
+  source = "./modules/cert-manager"
 }
 
 # resource "helm_release" "cert-manager-addons" {
@@ -62,3 +26,9 @@ resource "helm_release" "cert-manager" {
 #     value = var.cert-manager-acme-email
 # }]
 # }
+
+module "pihole-unbound" {
+  source = "./modules/pihole-unbound"
+
+  pihole-admin-password = var.pihole-admin-password
+}

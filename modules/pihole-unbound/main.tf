@@ -69,7 +69,7 @@ resource "helm_release" "pihole" {
   version= "2.34.0"
 
   values = [
-    templatefile("pihole-config/values.yaml", {
+    templatefile("modules/pihole-unbound/values.yaml", {
         pihole_admin_password = var.pihole-admin-password
     })
   ]
