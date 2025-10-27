@@ -70,7 +70,8 @@ resource "helm_release" "pihole" {
 
   values = [
     templatefile("modules/pihole-unbound/values.yaml", {
-        pihole_admin_password = var.pihole-admin-password
+        pihole_admin_password = var.pihole-admin-password,
+        pihole_loadbalancer_ip = var.pihole-loadbalancer-ip
     })
   ]
   atomic = true
