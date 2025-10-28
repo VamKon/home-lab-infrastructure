@@ -4,7 +4,10 @@ replicaCount: 1
 ingress:
   enabled: true
   hosts:
-  - pihole.vamseekonda.com
+  - ${pihole_hostname}.${pihole_domainname}
+
+
+hostname: ${pihole_hostname}
 
 # will create kubernetes services for web admin
 serviceWeb:
@@ -21,11 +24,16 @@ serviceDns:
   type: LoadBalancer
 
 # use unbound as upstream DNS server
-DNS1: "1.1.1.1"
-DNS2: "8.8.8.8"
+DNS1: "${unbound_ip}#5053"
+DNS2: ""
 
-# dnsmasq:
-#   enableCustomDnsMasq: false
+%{ if length(pihole_custom_dns_entries) > 0 }
+dnsmasq:
+  customDnsEntries:
+%{ for entry in pihole_custom_dns_entries }
+    - ${entry}
+%{ endfor }
+%{ endif }
   
 # enables cloudflare tunnel sidecar container
 # and sets upstream dns in pihole to leverage it

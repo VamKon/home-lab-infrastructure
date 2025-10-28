@@ -60,6 +60,19 @@ resource "helm_release" "unbound" {
   version = "1.0.3"
 }
 
+resource "time_sleep" "wait_for_service_startup" {
+  create_duration = "60s" # Wait for 60 seconds
+  depends_on = [helm_release.unbound] # Wait after instance creation
+}
+
+data "kubernetes_service" "unbound_dns_service_ip" {
+    metadata {
+        name = "unbound-dns"
+        namespace = "pihole"
+    }
+    depends_on = [ time_sleep.wait_for_service_startup ]
+}
+
 resource "helm_release" "pihole" {
   name = "pihole"
   namespace = helm_release.unbound.namespace
@@ -69,9 +82,13 @@ resource "helm_release" "pihole" {
   version= "2.34.0"
 
   values = [
-    templatefile("modules/pihole-unbound/values.yaml", {
+    templatefile("modules/pihole-unbound/values.tftpl", {
         pihole_admin_password = var.pihole-admin-password,
         pihole_loadbalancer_ip = var.pihole-loadbalancer-ip
+        pihole_hostname = var.pihole-hostname
+        pihole_domainname = var.pihole-domainname
+        pihole_custom_dns_entries = var.pihole-custom-dns-entries
+        unbound_ip = data.kubernetes_service.unbound_dns_service_ip.spec[0].cluster_ip
     })
   ]
   atomic = true

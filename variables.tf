@@ -31,6 +31,22 @@ variable "pihole-loadbalancer-ip" {
   description = "pihole loadbalancer ip" 
 }
 
+variable "pihole-hostname" {
+  type = string
+  description = "pihole hostname"
+}
+
+variable "pihole-domainname" {
+  type = string
+  description = "pihole domain name"
+}
+
+variable "pihole-custom-dns-entries" {
+  type = list(string)
+  description = "custom dns entries for pi-hole"
+  default = []
+}
+
 variable "kubernetes_context" {
   type = string
   description = "Current Kubernetes context to use"

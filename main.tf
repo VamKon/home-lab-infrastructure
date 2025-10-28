@@ -40,4 +40,7 @@ module "pihole-unbound" {
 
   pihole-admin-password = var.pihole-admin-password
   pihole-loadbalancer-ip = var.pihole-loadbalancer-ip
+  pihole-hostname = var.pihole-hostname
+  pihole-domainname = var.pihole-domainname
+  pihole-custom-dns-entries = var.pihole-custom-dns-entries
 }
