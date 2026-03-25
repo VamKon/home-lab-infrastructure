@@ -1,0 +1,41 @@
+# Helm values passed to the kalshi-trading chart by OpenTofu.
+# Override image tags here when promoting a new release.
+
+namespace: trading
+
+images:
+  backend:
+    repository: vkon2001/kalshi-trading-backend
+    tag: latest
+  streamlit:
+    repository: vkon2001/kalshi-trading-streamlit
+    tag: latest
+  postgres:
+    repository: postgres
+    tag: "15"
+
+config:
+  paperTrading:       "false"
+  initialBankroll:    "10.0"
+  kellyFraction:      "0.25"
+  maxTradePct:        "0.10"
+  maxTradeUsd:        "3.0"
+  minConfidence:      "0.50"
+  minEdgeThreshold:   "0.03"
+  scanIntervalHours:  "12"
+  kalshiApiBaseUrl:   "https://api.elections.kalshi.com/trade-api/v2"
+  minMarketVolume:    "0.0"
+  debug:              "false"
+
+ingress:
+  enabled: true
+  className: traefik
+  backendHost:   kalshi.kondas.org
+  streamlitHost: kalshi.kondas.org
+  backendPath:   /api
+  streamlitPath: /
+
+postgres:
+  database: kalshi_bot
+  user:     kalshi
+  storage:  5Gi

@@ -79,7 +79,7 @@ resource "helm_release" "pihole" {
 
   repository = "https://mojo2600.github.io/pihole-kubernetes/"
   chart = "pihole"
-  version= "2.34.0"
+  version= "2.35.0"
 
   values = [
     templatefile("modules/pihole-unbound/values.tftpl", {

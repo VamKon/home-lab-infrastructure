@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars and fill in real values.
+# NEVER commit terraform.tfvars to git.
+
+anthropic_api_key  = "sk-ant-..."
+kalshi_key_id      = "your-kalshi-key-id"
+kalshi_private_key = "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"

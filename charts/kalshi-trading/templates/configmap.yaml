@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kalshi-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "kalshi.labels" . | nindent 4 }}
+data:
+  PAPER_TRADING:        {{ .Values.config.paperTrading        | quote }}
+  INITIAL_BANKROLL:     {{ .Values.config.initialBankroll     | quote }}
+  KELLY_FRACTION:       {{ .Values.config.kellyFraction       | quote }}
+  MAX_TRADE_PCT:        {{ .Values.config.maxTradePct         | quote }}
+  MAX_TRADE_USD:        {{ .Values.config.maxTradeUsd         | quote }}
+  MIN_CONFIDENCE:       {{ .Values.config.minConfidence       | quote }}
+  MIN_EDGE_THRESHOLD:   {{ .Values.config.minEdgeThreshold    | quote }}
+  SCAN_INTERVAL_HOURS:  {{ .Values.config.scanIntervalHours   | quote }}
+  KALSHI_API_BASE_URL:  {{ .Values.config.kalshiApiBaseUrl    | quote }}
+  MIN_MARKET_VOLUME:    {{ .Values.config.minMarketVolume     | quote }}
+  DEBUG:                {{ .Values.config.debug               | quote }}

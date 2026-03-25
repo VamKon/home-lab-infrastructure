@@ -44,3 +44,15 @@ module "pihole-unbound" {
   pihole-domainname = var.pihole-domainname
   pihole-custom-dns-entries = var.pihole-custom-dns-entries
 }
+
+module "kalshi_trading_bot" {
+  source = "./modules/kalshi-trading-bot"
+
+  count = var.install-kalshi-trading-bot ? 1 : 0
+
+  anthropic_api_key  = var.anthropic_api_key
+  kalshi_key_id      = var.kalshi_key_id
+  kalshi_private_key = var.kalshi_private_key
+  postgres_password  = var.postgres_password
+  odds_api_key       = var.odds_api_key
+}

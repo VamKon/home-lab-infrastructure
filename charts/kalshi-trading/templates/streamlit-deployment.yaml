@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kalshi-streamlit
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "kalshi.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount.streamlit }}
+  selector:
+    matchLabels:
+      {{- include "kalshi.streamlit.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kalshi.streamlit.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: streamlit
+          image: "{{ .Values.images.streamlit.repository }}:{{ .Values.images.streamlit.tag }}"
+          imagePullPolicy: {{ .Values.images.streamlit.pullPolicy }}
+          ports:
+            - containerPort: 8501
+          env:
+            - name: BACKEND_URL
+              value: "http://kalshi-backend:8000"
+          resources:
+            {{- toYaml .Values.resources.streamlit | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8501
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8501
+            initialDelaySeconds: 10
+            periodSeconds: 10

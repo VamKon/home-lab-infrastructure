@@ -1,0 +1,76 @@
+# ── Kalshi Trading Bot — Helm values ───────────────────────────────────────
+# Override any value with:  helm upgrade --install ... --set key=value
+
+namespace: trading
+
+# ── Image registry (push your built images here) ───────────────────────────
+images:
+  backend:
+    repository: vkon2001/kalshi-trading-backend
+    tag: latest
+    pullPolicy: Always
+  streamlit:
+    repository: vkon2001/kalshi-trading-streamlit
+    tag: latest
+    pullPolicy: Always
+  postgres:
+    repository: postgres
+    tag: "15"
+    pullPolicy: IfNotPresent
+
+# ── Replica counts ─────────────────────────────────────────────────────────
+replicaCount:
+  backend:   1
+  streamlit: 1
+
+# ── Resources ──────────────────────────────────────────────────────────────
+resources:
+  backend:
+    requests: { cpu: "100m", memory: "256Mi" }
+    limits:   { cpu: "500m", memory: "512Mi" }
+  streamlit:
+    requests: { cpu: "100m", memory: "256Mi" }
+    limits:   { cpu: "300m", memory: "512Mi" }
+  postgres:
+    requests: { cpu: "100m", memory: "256Mi" }
+    limits:   { cpu: "500m", memory: "512Mi" }
+
+# ── Ingress (Traefik on k3s) ───────────────────────────────────────────────
+ingress:
+  enabled: true
+  className: traefik
+  backendHost:   kalshi.kondas.org
+  streamlitHost: kalshi.kondas.org
+  backendPath:   /api
+  streamlitPath: /
+
+# ── PostgreSQL ─────────────────────────────────────────────────────────────
+postgres:
+  database: kalshi_bot
+  user:     kalshi
+  # password injected via secret (see secrets section below)
+  storage:  5Gi
+  storageClass: ""    # leave blank to use cluster default
+
+# ── Trading config (non-secret) ────────────────────────────────────────────
+config:
+  paperTrading:       "true"
+  initialBankroll:    "1000.0"
+  kellyFraction:      "0.25"
+  maxTradePct:        "0.05"
+  maxTradeUsd:        "50.0"
+  minConfidence:      "0.55"
+  minEdgeThreshold:   "0.03"
+  scanIntervalHours:  "12"
+  kalshiApiBaseUrl:   "https://demo-api.kalshi.co/trade-api/v2"
+  minMarketVolume:    "0.0"     # set to "100.0" for live/production trading
+  debug:              "false"
+
+# ── Secrets (base64-encoded values set at install time) ────────────────────
+# Never commit real values here!  Use --set or an external secret manager.
+secrets:
+  anthropicApiKey:  ""        # base64(sk-ant-...)
+  kalshiKeyId:      ""        # base64(your-kalshi-key-id)
+  kalshiPrivateKey: ""        # base64(-----BEGIN RSA PRIVATE KEY-----....)
+  postgresPassword: ""        # base64(kalshi)
+  oddsApiKey:       ""        # base64(your-odds-api-key) — optional, enables sportsbook consensus

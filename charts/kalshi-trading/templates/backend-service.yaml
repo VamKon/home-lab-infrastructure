@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kalshi-backend
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "kalshi.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "kalshi.backend.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP

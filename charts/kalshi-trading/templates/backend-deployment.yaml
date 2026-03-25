@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kalshi-backend
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "kalshi.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount.backend }}
+  selector:
+    matchLabels:
+      {{- include "kalshi.backend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kalshi.backend.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.images.backend.repository }}:{{ .Values.images.backend.tag }}"
+          imagePullPolicy: {{ .Values.images.backend.pullPolicy }}
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: kalshi-config
+          env:
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kalshi-secrets
+                  key: ANTHROPIC_API_KEY
+            - name: KALSHI_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: kalshi-secrets
+                  key: KALSHI_KEY_ID
+            - name: KALSHI_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kalshi-secrets
+                  key: KALSHI_PRIVATE_KEY
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kalshi-secrets
+                  key: POSTGRES_PASSWORD
+            - name: ODDS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kalshi-secrets
+                  key: ODDS_API_KEY
+                  optional: true
+            - name: DATABASE_URL
+              value: "postgresql+asyncpg://{{ .Values.postgres.user }}:$(POSTGRES_PASSWORD)@kalshi-postgres:5432/{{ .Values.postgres.database }}"
+          resources:
+            {{- toYaml .Values.resources.backend | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
