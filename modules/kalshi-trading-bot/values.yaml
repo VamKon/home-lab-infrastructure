@@ -16,15 +16,16 @@ images:
 
 config:
   paperTrading:       "false"
-  initialBankroll:    "10.0"
+  initialBankroll:    "110.0"   # updated: $10 original + $100 deposited April 2026
   kellyFraction:      "0.25"
   maxTradePct:        "0.10"
-  maxTradeUsd:        "3.0"
+  maxTradeUsd:        "11.0"    # ~10% of $110 bankroll (was $3 for $10 bankroll)
   minConfidence:      "0.50"
-  minEdgeThreshold:   "0.03"
-  scanIntervalHours:  "12"
+  minEdgeThreshold:        "0.02"
+  requireSportsbookOdds:   "true"   # skip markets with no bookmaker coverage
+  scanIntervalHours:  "2"
   kalshiApiBaseUrl:   "https://api.elections.kalshi.com/trade-api/v2"
-  minMarketVolume:    "0.0"
+  minMarketVolume:    "100.0"
   debug:              "false"
 
 ingress:
