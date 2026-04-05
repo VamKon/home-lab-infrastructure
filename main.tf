@@ -8,6 +8,8 @@ module "kube-prometheus-stack" {
   source = "./modules/kube-prometheus-stack"
 
   count = var.install-kube-prometheus-stack ? 1 : 0
+
+  kube_prometheus_alert_manager_slack_webhook_url = var.kube_prometheus_alert_manager_slack_webhook_url
 }
 
 module "cert-manager" {

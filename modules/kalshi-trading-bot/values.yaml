@@ -20,7 +20,7 @@ config:
   kellyFraction:      "0.25"
   maxTradePct:        "0.10"
   maxTradeUsd:        "11.0"    # ~10% of $110 bankroll (was $3 for $10 bankroll)
-  minConfidence:      "0.50"
+  minConfidence:      "0.55"
   minEdgeThreshold:        "0.02"
   requireSportsbookOdds:   "true"   # skip markets with no bookmaker coverage
   scanIntervalHours:  "2"

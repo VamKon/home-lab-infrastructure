@@ -92,3 +92,9 @@ variable "odds_api_key" {
   sensitive   = true
   default     = ""
 }
+
+variable "kube_prometheus_alert_manager_slack_webhook_url" {
+  type        = string
+  description = "Slack webhook URL for Alertmanager"
+  sensitive   = true
+}

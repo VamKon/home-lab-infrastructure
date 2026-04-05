@@ -8,7 +8,9 @@ resource "helm_release" "kube-prometheus-stack" {
   version = "77.11.0"
 
   values = [
-    file("modules/kube-prometheus-stack/values.yaml")
+    templatefile("${path.module}/values.yaml", {
+      slack_api_url = var.kube_prometheus_alert_manager_slack_webhook_url
+    })
   ]
 
   atomic = true
