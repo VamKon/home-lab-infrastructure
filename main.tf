@@ -47,6 +47,16 @@ module "pihole-unbound" {
   pihole-custom-dns-entries = var.pihole-custom-dns-entries
 }
 
+module "twingate_connector" {
+  source = "./modules/twingate-connector"
+
+  count = var.install-twingate-connector ? 1 : 0
+
+  twingate_network       = var.twingate_network
+  twingate_access_token  = var.twingate_access_token
+  twingate_refresh_token = var.twingate_refresh_token
+}
+
 module "kalshi_trading_bot" {
   source = "./modules/kalshi-trading-bot"
 
