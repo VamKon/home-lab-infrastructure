@@ -28,3 +28,10 @@ variable "odds_api_key" {
   sensitive   = true
   default     = ""
 }
+
+variable "openrouter_api_key" {
+  description = "OpenRouter API key for Llama 3 cricket fact extraction — optional, falls back gracefully when not set"
+  type        = string
+  sensitive   = true
+  default     = ""
+}

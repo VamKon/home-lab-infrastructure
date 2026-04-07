@@ -14,7 +14,8 @@ resource "kubernetes_secret" "kalshi_secrets" {
     KALSHI_KEY_ID      = var.kalshi_key_id
     KALSHI_PRIVATE_KEY = var.kalshi_private_key
     POSTGRES_PASSWORD  = var.postgres_password
-    ODDS_API_KEY       = var.odds_api_key
+    ODDS_API_KEY          = var.odds_api_key
+    OPENROUTER_API_KEY    = var.openrouter_api_key
   }
 }
 

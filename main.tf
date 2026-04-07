@@ -67,4 +67,5 @@ module "kalshi_trading_bot" {
   kalshi_private_key = var.kalshi_private_key
   postgres_password  = var.postgres_password
   odds_api_key       = var.odds_api_key
+  openrouter_api_key = var.openrouter_api_key
 }

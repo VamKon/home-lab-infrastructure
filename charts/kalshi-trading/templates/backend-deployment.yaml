@@ -51,6 +51,12 @@ spec:
                   name: kalshi-secrets
                   key: ODDS_API_KEY
                   optional: true
+            - name: OPENROUTER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kalshi-secrets
+                  key: OPENROUTER_API_KEY
+                  optional: true
             - name: DATABASE_URL
               value: "postgresql+asyncpg://{{ .Values.postgres.user }}:$(POSTGRES_PASSWORD)@kalshi-postgres:5432/{{ .Values.postgres.database }}"
           resources:

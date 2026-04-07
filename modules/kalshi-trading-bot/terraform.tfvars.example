@@ -4,3 +4,6 @@
 anthropic_api_key  = "sk-ant-..."
 kalshi_key_id      = "your-kalshi-key-id"
 kalshi_private_key = "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
+postgres_password  = "your-postgres-password"
+odds_api_key       = "your-odds-api-key"
+openrouter_api_key = "sk-or-..."

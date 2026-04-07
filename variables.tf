@@ -93,6 +93,13 @@ variable "odds_api_key" {
   default     = ""
 }
 
+variable "openrouter_api_key" {
+  type        = string
+  description = "OpenRouter API key for Llama 3 cricket fact extraction (optional)"
+  sensitive   = true
+  default     = ""
+}
+
 variable "install-twingate-connector" {
   type        = bool
   description = "install twingate connector"
