@@ -22,7 +22,10 @@ config:
   maxTradeUsd:        "11.0"    # ~10% of $110 bankroll (was $3 for $10 bankroll)
   minConfidence:      "0.55"
   minEdgeThreshold:        "0.02"
-  requireSportsbookOdds:   "true"   # skip markets with no bookmaker coverage
+  # Disabled for cricket: The Odds API barely covers T20 internationals, so
+  # REQUIRE_SPORTSBOOK_ODDS=true was silently killing every cricket market before
+  # OpenRouter could fire.  Quality gating is handled by sport_config.py allowlists.
+  requireSportsbookOdds:   "false"
   scanIntervalHours:  "2"
   kalshiApiBaseUrl:   "https://api.elections.kalshi.com/trade-api/v2"
   minMarketVolume:    "100.0"

@@ -15,5 +15,6 @@ data:
   MIN_EDGE_THRESHOLD:   {{ .Values.config.minEdgeThreshold    | quote }}
   SCAN_INTERVAL_HOURS:  {{ .Values.config.scanIntervalHours   | quote }}
   KALSHI_API_BASE_URL:  {{ .Values.config.kalshiApiBaseUrl    | quote }}
-  MIN_MARKET_VOLUME:    {{ .Values.config.minMarketVolume     | quote }}
-  DEBUG:                {{ .Values.config.debug               | quote }}
+  MIN_MARKET_VOLUME:          {{ .Values.config.minMarketVolume         | quote }}
+  DEBUG:                      {{ .Values.config.debug                   | quote }}
+  REQUIRE_SPORTSBOOK_ODDS:    {{ .Values.config.requireSportsbookOdds   | quote }}
