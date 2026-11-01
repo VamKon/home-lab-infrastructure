@@ -45,3 +45,20 @@ module "twingate_connector" {
   twingate_refresh_token = var.twingate_refresh_token
 }
 
+module "knab" {
+  source = "./modules/knab"
+
+  count = var.install-knab ? 1 : 0
+
+  knab_master_key = var.knab_master_key
+  ghcr_username   = var.ghcr_username
+  ghcr_token      = var.ghcr_token
+}
+
+module "cert_manager_cloudflare" {
+  source = "./modules/cert-manager-cloudflare"
+
+  count = var.install-cert-manager-cloudflare ? 1 : 0
+
+  cloudflare_api_token = var.cloudflare_api_token
+}
