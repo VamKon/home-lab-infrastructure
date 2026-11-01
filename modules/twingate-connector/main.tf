@@ -37,7 +37,7 @@ resource "helm_release" "twingate_connector" {
     },
     {
       name = "connector.dnsServer"
-      value = "192.168.5.100"
+      value = "192.168.5.1"
     }
   ]
 

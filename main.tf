@@ -35,18 +35,6 @@ module "cert-manager" {
 # }]
 # }
 
-module "pihole-unbound" {
-  source = "./modules/pihole-unbound"
-
-  count = var.install-pihole ? 1 : 0
-
-  pihole-admin-password = var.pihole-admin-password
-  pihole-loadbalancer-ip = var.pihole-loadbalancer-ip
-  pihole-hostname = var.pihole-hostname
-  pihole-domainname = var.pihole-domainname
-  pihole-custom-dns-entries = var.pihole-custom-dns-entries
-}
-
 module "twingate_connector" {
   source = "./modules/twingate-connector"
 
@@ -57,15 +45,3 @@ module "twingate_connector" {
   twingate_refresh_token = var.twingate_refresh_token
 }
 
-module "kalshi_trading_bot" {
-  source = "./modules/kalshi-trading-bot"
-
-  count = var.install-kalshi-trading-bot ? 1 : 0
-
-  anthropic_api_key  = var.anthropic_api_key
-  kalshi_key_id      = var.kalshi_key_id
-  kalshi_private_key = var.kalshi_private_key
-  postgres_password  = var.postgres_password
-  odds_api_key       = var.odds_api_key
-  openrouter_api_key = var.openrouter_api_key
-}
